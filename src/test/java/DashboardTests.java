@@ -4,8 +4,8 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.util.TestUtil;
 
-import static util.TestUtil.generateRandomEmail;
 
 public class DashboardTests extends BaseTest{
 
@@ -41,7 +41,7 @@ public class DashboardTests extends BaseTest{
         driver.get(registerUrl);
         registerAccountPage.insertFirstName("John");
         registerAccountPage.insertLastName("Doe");
-        registerAccountPage.insertEmail(generateRandomEmail());
+        registerAccountPage.insertEmail(TestUtil.generateRandomEmail());
         registerAccountPage.insertPhoneNumber("01233456");
         registerAccountPage.setPassword("Password123!");
         registerAccountPage.setPasswordConfirm("Password123!");

@@ -3,9 +3,7 @@ import org.pages.RegisterAccountPage;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import static util.TestUtil.generateRandomEmail;
-
+import org.util.TestUtil;
 
 public class RegisterAccountTests extends BaseTest{
 
@@ -23,7 +21,7 @@ public class RegisterAccountTests extends BaseTest{
     public void registerNewAccountMandatoryFieldsTest() throws Exception{
         registerAccountPage.insertFirstName("John");
         registerAccountPage.insertLastName("Doe");
-        registerAccountPage.insertEmail(generateRandomEmail());
+        registerAccountPage.insertEmail(TestUtil.generateRandomEmail());
         registerAccountPage.insertPhoneNumber("01233456");
         registerAccountPage.setPassword("Password123!");
         registerAccountPage.setPasswordConfirm("Password123!");
@@ -39,7 +37,7 @@ public class RegisterAccountTests extends BaseTest{
     public void registerWithoutPrivacyPolicyTest() {
         registerAccountPage.insertFirstName("John");
         registerAccountPage.insertLastName("Doe");
-        registerAccountPage.insertEmail(generateRandomEmail());
+        registerAccountPage.insertEmail(TestUtil.generateRandomEmail());
         registerAccountPage.insertPhoneNumber("01233456");
         registerAccountPage.setPassword("Password123!");
         registerAccountPage.setPasswordConfirm("Password123!");

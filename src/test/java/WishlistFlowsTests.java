@@ -6,8 +6,7 @@ import org.pages.WishlistPage;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
-import static util.TestUtil.generateRandomEmail;
+import org.util.TestUtil;
 
 public class WishlistFlowsTests extends BaseTest {
 
@@ -61,7 +60,7 @@ public class WishlistFlowsTests extends BaseTest {
         driver.get(registerUrl);
         registerAccountPage.insertFirstName("John");
         registerAccountPage.insertLastName("Doe");
-        registerAccountPage.insertEmail(generateRandomEmail());
+        registerAccountPage.insertEmail(TestUtil.generateRandomEmail());
         registerAccountPage.insertPhoneNumber("01233456");
         registerAccountPage.setPassword("Password123!");
         registerAccountPage.setPasswordConfirm("Password123!");

@@ -2,8 +2,7 @@ import org.pages.LoginPage;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import static util.TestUtil.generateRandomEmail;
+import org.util.TestUtil;
 
 public class LoginTests extends BaseTest{
 
@@ -20,7 +19,7 @@ public class LoginTests extends BaseTest{
 
     @Test
     public void invalidCredentialsTest() {
-        loginPage.insertEmail(generateRandomEmail());
+        loginPage.insertEmail(TestUtil.generateRandomEmail());
         loginPage.insertPassword("randomPassword");
         loginPage.clickLogin();
         String actualValue = loginPage.getErrorMessage();
