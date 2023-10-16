@@ -1,4 +1,3 @@
-import org.openqa.selenium.NoSuchElementException;
 import org.pages.AccountCreatedPage;
 import org.pages.RegisterAccountPage;
 import org.testng.Assert;
@@ -174,6 +173,39 @@ public class RegisterAccountTests extends BaseTest {
         Assert.assertEquals(actualValuePassword, expectedValuePassword, "Error message is not the expected one.");
 
 
+    }
+
+    @Test
+
+    public void registerAccountTelephoneLessThanThreeCharacters() {
+        registerAccountPage.insertFirstName("John");
+        registerAccountPage.insertLastName("Doe");
+        registerAccountPage.insertEmail(generateRandomEmail());
+        registerAccountPage.insertPhoneNumber("01");
+        registerAccountPage.setPassword("Password123!");
+        registerAccountPage.setPasswordConfirm("Password123!");
+        registerAccountPage.checkPrivacyPolicy();
+
+        registerAccountPage.clickContinue();
+
+        String actualValueTelephone = registerAccountPage.getTelephoneErrorMessage();
+        String expectedValueTelephone = "Telephone must be between 3 and 32 characters!";
+        Assert.assertEquals(actualValueTelephone, expectedValueTelephone, "Error message is not the expected one.");
+    }
+    @Test
+    public void registerAccountTelephoneMoreThanThirtyTwoCharacters(){
+        registerAccountPage.insertFirstName("John");
+        registerAccountPage.insertLastName("Doe");
+        registerAccountPage.insertEmail(generateRandomEmail());
+        registerAccountPage.insertPhoneNumber("0123456789abcdefghijklmnopqrstuvwxyz");
+        registerAccountPage.setPassword("Password123!");
+        registerAccountPage.setPasswordConfirm("Password123!");
+        registerAccountPage.checkPrivacyPolicy();
+
+        registerAccountPage.clickContinue();
+        String actualValueTelephone = registerAccountPage.getTelephoneErrorMessage();
+        String expectedValueTelephone = "Telephone must be between 3 and 32 characters!";
+        Assert.assertEquals(actualValueTelephone, expectedValueTelephone, "Error message is not the expected one.");
     }
 
 }
