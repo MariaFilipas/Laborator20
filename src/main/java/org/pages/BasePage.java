@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class BasePage {
-    WebDriver driver;
+    protected WebDriver driver;
 
     private By errorMessage = By.xpath(".//div[@class = 'alert alert-danger alert-dismissible']");
     private By wishlistHeartElement = By.xpath(".//a[@aria-label = 'Wishlist']");
@@ -23,9 +23,10 @@ public class BasePage {
     public void enterTextToSearch(String searchText) {
         driver.findElement(searchInput).sendKeys(searchText);
     }
-    public void clickSearchButton(){
+    public void clickSearchButton() throws InterruptedException {
         WebElement element = driver.findElement(searchButton);
         element.click();
+        Thread.sleep(1000);
     }
 
 

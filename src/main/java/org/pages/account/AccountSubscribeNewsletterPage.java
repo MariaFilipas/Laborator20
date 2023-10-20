@@ -1,10 +1,11 @@
-package org.pages;
+package org.pages.account;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.pages.BasePage;
 
-public class AccountSubscribeNewsletterPage extends BasePage{
+public class AccountSubscribeNewsletterPage extends BasePage {
 
     private By clickContinueButton= By.xpath("//*[@id=\"content\"]/form/div/div[2]/input");
 

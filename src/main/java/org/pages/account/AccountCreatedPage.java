@@ -1,10 +1,11 @@
-package org.pages;
+package org.pages.account;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.pages.BasePage;
 
-public class AccountCreatedPage extends BasePage{
+public class AccountCreatedPage extends BasePage {
 
     private By paragraphElement = By.xpath("//div[@id='content']/p[2]");
     private By logoutButton = By.xpath("//*[@id=\"column-right\"]/div/a[14]");

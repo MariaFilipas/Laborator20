@@ -1,6 +1,7 @@
 import org.openqa.selenium.WebElement;
 import org.pages.SearchResultsPage;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -21,11 +22,10 @@ public class SearchResultsTests extends BaseTest {
     }
 
     @Test
-    public void searchProductSuccessfullTest() {
+    public void searchProductSuccessfullTest() throws InterruptedException {
         searchResultsPage.enterTextToSearch("Nikon D300");
 
         searchResultsPage.clickSearchButton();
-
         List<WebElement> results = searchResultsPage.getResults("Nikon D300");
         int actualResults = results.size();
         int expectedResults = 2;
@@ -33,7 +33,7 @@ public class SearchResultsTests extends BaseTest {
     }
 
 @Test
-public void searchProductUnsuccessfullTest() {
+public void searchProductUnsuccessfullTest() throws InterruptedException {
 
     searchResultsPage.enterTextToSearch("Nikon D500");
 

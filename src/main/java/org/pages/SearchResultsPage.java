@@ -17,14 +17,7 @@ public class SearchResultsPage extends BasePage {
     private By addToWishlistButton = By.xpath(".//button[@title = 'Add to Wish List']");
 
     private By closePopupButton = By.xpath(".//button[@aria-label = 'Close']");
-
-    public void clickFirstItem() {
-        driver.findElements(resultItems).get(0).click();
-    }
-
-    public WebElement getFirstItem() {
-        return driver.findElements(resultItems).get(0);
-    }
+    private By buyNowButton = By.xpath(".//button[@title = 'Buy now']");
 
     public List<WebElement> getResults(String productName){
         String xPath = ".//div[@class = 'carousel-item active']/img[contains(@title, '"+productName+"')]";
@@ -42,5 +35,10 @@ public class SearchResultsPage extends BasePage {
 
     public void clickClosePopupButton() {
         driver.findElement(closePopupButton).click();
+    }
+
+    public void clickBuyNow() {
+        WebElement element = driver.findElement(buyNowButton);
+        element.click();
     }
 }

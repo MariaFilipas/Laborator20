@@ -1,10 +1,11 @@
-package org.pages;
+package org.pages.account;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.pages.BasePage;
 
-public class AccountChangePasswordPage extends BasePage{
+public class AccountChangePasswordPage extends BasePage {
 
     private By passwordInput = By.id("input-password");
     private By passwordConfirmInput = By.id("input-confirm");

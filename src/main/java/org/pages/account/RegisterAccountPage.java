@@ -1,8 +1,9 @@
-package org.pages;
+package org.pages.account;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.pages.BasePage;
 
 public class RegisterAccountPage extends BasePage {
 

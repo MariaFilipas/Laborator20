@@ -1,6 +1,6 @@
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.pages.RegisterAccountPage;
+import org.pages.account.RegisterAccountPage;
 import org.pages.SearchResultsPage;
 import org.pages.WishlistPage;
 import org.testng.Assert;
@@ -30,7 +30,6 @@ public class WishlistFlowsTests extends BaseTest {
 
     @Test
     public void addItemToWishlist() throws Exception {
-        driver.manage().window().fullscreen();
         String expectedResult = "No results!";
         wishlistPage.clickWishlist();
         String actualResult = wishlistPage.getNoResultsElementText();
@@ -39,7 +38,7 @@ public class WishlistFlowsTests extends BaseTest {
         wishlistPage.clickSearchButton();
         //Wait for items to load
         Thread.sleep(1000);
-        WebElement item = searchResultsPage.getFirstItem();
+        WebElement item = searchResultsPage.getResults("Apple Cinema 30").get(0);
         action.moveToElement(item).build().perform();
         //Wait for hoover element to be displayed
         Thread.sleep(1000);

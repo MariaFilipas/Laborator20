@@ -1,5 +1,5 @@
-import org.pages.AccountCreatedPage;
-import org.pages.RegisterAccountPage;
+import org.pages.account.AccountCreatedPage;
+import org.pages.account.RegisterAccountPage;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -34,6 +34,7 @@ public class RegisterAccountTests extends BaseTest {
         String actualText = accountCreatedPage.getParagraphText();
         String expectedText = "Congratulations! Your new account has been successfully created!";
         Assert.assertEquals(actualText, expectedText, "Actual text is not the expected one.");
+        accountCreatedPage.clickLogout();
     }
 
     @Test

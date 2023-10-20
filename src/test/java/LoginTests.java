@@ -1,7 +1,7 @@
-import org.pages.AccountCreatedPage;
-import org.pages.ForgottenPasswordPage;
-import org.pages.LoginPage;
-import org.pages.RegisterAccountPage;
+import org.pages.account.AccountCreatedPage;
+import org.pages.login.ForgottenPasswordPage;
+import org.pages.login.LoginPage;
+import org.pages.account.RegisterAccountPage;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -17,9 +17,9 @@ public class LoginTests extends BaseTest {
     public void beforeMethod() {
         System.out.println("Navigate to " + loginPageURL);
         driver.get(loginPageURL);
-        driver.manage().window().fullscreen();
         loginPage = new LoginPage(driver);
     }
+
 
     @Test
     public void validCredentialsTest() {
