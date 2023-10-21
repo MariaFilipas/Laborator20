@@ -1,5 +1,8 @@
 import org.openqa.selenium.WebElement;
+import org.pages.SearchResultsPage;
 import org.pages.account.*;
+import org.pages.checkout.CheckoutPage;
+import org.pages.checkout.ConfirmOrderPage;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -62,6 +65,32 @@ public class AccountPageTests extends BaseTest {
         Assert.assertEquals(accountPage.getMyWishlistElementText(), expectedModifyWishlistElementText,
                 "Edit account element text is not the expected one");
         Assert.assertEquals(accountPage.getNewsletterElementText(), expectedNewsletterElementText,
+                "Edit account element text is not the expected one");
+    }
+
+    @Test
+    public void verifyDashboardMyOrdersSection() {
+        String expectedMyOrdersText = "My Orders";
+        String expectedOrderHistoryText = "View your order history";
+        String expectedDownloadsElementText = "Downloads";
+        String expectedRewardsElementText = "Your Reward Points";
+        String expectedReturnsElementText = "View your return requests";
+        String expectedTransactionsElementText = "Your Transactions";
+        String expectedRecurringElementText = "Recurring payments";
+
+        Assert.assertEquals(accountPage.getMyOrdersElementText(), expectedMyOrdersText,
+                "First section header text is not the expected one");
+        Assert.assertEquals(accountPage.getOrderHistoryElementText(), expectedOrderHistoryText,
+                "Edit account element text is not the expected one");
+        Assert.assertEquals(accountPage.getDownloadsElementText(), expectedDownloadsElementText,
+                "Edit account element text is not the expected one");
+        Assert.assertEquals(accountPage.getRewardsElementText(), expectedRewardsElementText,
+                "Edit account element text is not the expected one");
+        Assert.assertEquals(accountPage.getReturnsElementText(), expectedReturnsElementText,
+                "Edit account element text is not the expected one");
+        Assert.assertEquals(accountPage.getTransactionsElementText(), expectedTransactionsElementText,
+                "Edit account element text is not the expected one");
+        Assert.assertEquals(accountPage.getRecurringPaymentsElementText(), expectedRecurringElementText,
                 "Edit account element text is not the expected one");
     }
 
@@ -173,6 +202,91 @@ public class AccountPageTests extends BaseTest {
 
         String expectedMessage = "Your address has been successfully deleted";
         String actualMessage = accountModifyAddressPage.getAlertMessage();
+        Assert.assertEquals(actualMessage, expectedMessage);
+    }
+
+    @Test
+    public void checkOrderHistoryTest() throws InterruptedException {
+        accountPage.enterTextToSearch("Nikon D300");
+        accountPage.clickSearchButton();
+        SearchResultsPage searchResultsPage = new SearchResultsPage(driver);
+        List<WebElement> results = searchResultsPage.getResults("Nikon D300");
+        results.get(0).click();
+        searchResultsPage.clickBuyNow();
+        Thread.sleep(3000);
+        CheckoutPage checkoutPage = new CheckoutPage(driver);
+        checkoutPage.insertFirstName("John");
+        checkoutPage.insertLastName("Doe");
+        checkoutPage.insertAddressOne("Street one");
+        checkoutPage.insertCity("Cluj-Napoca");
+        checkoutPage.insertPostcode("400");
+        checkoutPage.selectCountry("Romania");
+        Thread.sleep(1000);
+        checkoutPage.selectRegion("Cluj");
+        checkoutPage.clickAgreeTermsAndConditions();
+        Thread.sleep(1000);
+        checkoutPage.clickContinueButton();
+        Thread.sleep(5000);
+        ConfirmOrderPage confirmOrderPage = new ConfirmOrderPage(driver);
+        confirmOrderPage.clickConfirmOrderButton();
+        Thread.sleep(3000);
+        driver.get(accountPageURL);
+
+        accountPage.clickOrderHistoryButton();
+        Thread.sleep(2000);
+
+        AccountOrderPage accountOrderPage = new AccountOrderPage(driver);
+
+        int expectedOrderNumber = 1;
+        int actualOrderNumber = accountOrderPage.getOrderRows().size();
+        Assert.assertEquals(actualOrderNumber, expectedOrderNumber);
+    }
+
+    @Test
+    public void orderReturnTest() throws InterruptedException {
+        accountPage.enterTextToSearch("Nikon D300");
+        accountPage.clickSearchButton();
+        SearchResultsPage searchResultsPage = new SearchResultsPage(driver);
+        List<WebElement> results = searchResultsPage.getResults("Nikon D300");
+        results.get(0).click();
+        searchResultsPage.clickBuyNow();
+        Thread.sleep(3000);
+        CheckoutPage checkoutPage = new CheckoutPage(driver);
+        checkoutPage.insertFirstName("John");
+        checkoutPage.insertLastName("Doe");
+        checkoutPage.insertAddressOne("Street one");
+        checkoutPage.insertCity("Cluj-Napoca");
+        checkoutPage.insertPostcode("400");
+        checkoutPage.selectCountry("Romania");
+        Thread.sleep(1000);
+        checkoutPage.selectRegion("Cluj");
+        checkoutPage.clickAgreeTermsAndConditions();
+        Thread.sleep(1000);
+        checkoutPage.clickContinueButton();
+        Thread.sleep(5000);
+        ConfirmOrderPage confirmOrderPage = new ConfirmOrderPage(driver);
+        confirmOrderPage.clickConfirmOrderButton();
+        Thread.sleep(3000);
+        driver.get(accountPageURL);
+        accountPage.clickOrderHistoryButton();
+        Thread.sleep(2000);
+        AccountOrderPage accountOrderPage = new AccountOrderPage(driver);
+        List<WebElement> orderInfoButtons = accountOrderPage.getOrderInfoButtons();
+        orderInfoButtons.get(0).click();
+        Thread.sleep(1000);
+        AccountOrderInfoPage accountOrderInfoPage = new AccountOrderInfoPage(driver);
+        List<WebElement> returnButtons = accountOrderInfoPage.getReturnButtons();
+        returnButtons.get(0).click();
+        Thread.sleep(1000);
+        AccountReturnPage accountReturnPage = new AccountReturnPage(driver);
+        accountReturnPage.selectReasonToReturn("Order Error");
+
+        accountReturnPage.clickSubmitButton();
+        Thread.sleep(1000);
+
+        ProductReturnPage productReturnPage = new ProductReturnPage(driver);
+        String expectedMessage = "Thank you for submitting your return request. Your request has been sent to the relevant department for processing.";
+        String actualMessage = productReturnPage.getReturnMessage();
         Assert.assertEquals(actualMessage, expectedMessage);
     }
 }

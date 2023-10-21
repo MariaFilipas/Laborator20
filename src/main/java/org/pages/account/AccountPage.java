@@ -16,6 +16,15 @@ public class AccountPage extends BasePage {
     private By modifyWishlistButton = By.xpath(".//div[@id='content']//a[contains(@href, 'account/wishlist')]");
     private By modifyAddressEntriesButton = By.xpath(".//div[@id='content']//a[contains(@href, 'account/address')]");
     private By logoutButton = By.xpath("//*[@id=\"column-right\"]/div/a[14]");
+    private By myOrdersText = By.xpath("//*[@id=\"content\"]/div[2]/h2");
+    private By orderHistoryButton = By.xpath(".//div[@id='content']//a[contains(@href, 'account/order')]");
+    private By downloadsButton = By.xpath(".//div[@id='content']//a[contains(@href, 'account/download')]");
+    private By rewardButton = By.xpath(".//div[@id='content']//a[contains(@href, 'account/reward')]");
+    private By returnButton = By.xpath(".//div[@id='content']//a[contains(@href, 'account/return')]");
+
+    private By transactionsButton = By.xpath(".//div[@id='content']//a[contains(@href, 'account/transaction')]");
+
+    private By recurringPaymentsButton = By.xpath(".//div[@id='content']//a[contains(@href, 'account/recurring')]");
 
     public AccountPage(WebDriver driver){
         this.driver = driver;
@@ -45,6 +54,35 @@ public class AccountPage extends BasePage {
         return driver.findElement(subscribeUnsubscribeButton).getText();
     }
 
+    public String getMyOrdersElementText(){
+        WebElement element = driver.findElement(myOrdersText);
+        return element.getText();
+    }
+    public String getOrderHistoryElementText(){
+        WebElement element = driver.findElement(orderHistoryButton);
+        return element.getText();
+    }
+    public String getDownloadsElementText(){
+        WebElement element = driver.findElement(downloadsButton);
+        return element.getText();
+    }
+    public String getRewardsElementText(){
+        WebElement element = driver.findElement(rewardButton);
+        return element.getText();
+    }
+    public String getReturnsElementText(){
+        WebElement element = driver.findElement(returnButton);
+        return element.getText();
+    }
+    public String getTransactionsElementText(){
+        WebElement element = driver.findElement(transactionsButton);
+        return element.getText();
+    }
+
+    public String getRecurringPaymentsElementText(){
+        WebElement element = driver.findElement(recurringPaymentsButton);
+        return element.getText();
+    }
     public void clickEditAccountButton(){
         WebElement element = driver.findElement(editAccountInfoButton);
         element.click();
@@ -69,6 +107,11 @@ public class AccountPage extends BasePage {
     }
     public void clickModifyAddressEntitiesButton(){
         WebElement element = driver.findElement(modifyAddressEntriesButton);
+        element.click();
+    }
+
+    public void clickOrderHistoryButton() {
+        WebElement element = driver.findElement(orderHistoryButton);
         element.click();
     }
 }

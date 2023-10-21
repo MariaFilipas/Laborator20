@@ -6,6 +6,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.pages.BasePage;
 
+import java.util.List;
+
 public class CheckoutPage extends BasePage {
 
     private By firstNameInput = By.id("input-payment-firstname");
@@ -19,6 +21,9 @@ public class CheckoutPage extends BasePage {
 
     private By agreeTermsAndConditionsCheckBox = By.xpath("//*[@id=\"form-checkout\"]/div/div[2]/div/div[5]/label");
     private By continueButton = By.id("button-save");
+    private By productRemoveButtons = By.xpath("//*[@id=\"checkout-cart\"]/table/tbody/tr/td[3]/div/div/button[2]");
+    private By alertMessage = By.xpath("//*[@id=\"form-checkout\"]/div[1]");
+
     public CheckoutPage(WebDriver driver){
         this.driver = driver;
     }
@@ -65,5 +70,15 @@ public class CheckoutPage extends BasePage {
     public void clickContinueButton(){
         WebElement element = driver.findElement(continueButton);
         element.click();
+    }
+
+    public List<WebElement> getProductRemoveButtons(){
+        List<WebElement> elements = driver.findElements(productRemoveButtons);
+        return elements;
+    }
+
+    public String  getAlertMessage() {
+        WebElement element = driver.findElement(alertMessage);
+        return element.getText();
     }
 }

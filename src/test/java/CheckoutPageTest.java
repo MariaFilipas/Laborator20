@@ -6,7 +6,9 @@ import org.pages.account.RegisterAccountPage;
 import org.pages.checkout.CheckoutPage;
 import org.pages.checkout.CheckoutSuccessPage;
 import org.pages.checkout.ConfirmOrderPage;
+import org.pages.checkout.ShippingCartPage;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -39,6 +41,13 @@ public class CheckoutPageTest extends BaseTest {
         AccountCreatedPage accountCreatedPage = new AccountCreatedPage(driver);
         accountCreatedPage.clickContinueButton();
     }
+
+    @AfterMethod
+    public void afterMethod(){
+        driver.get(accountPageURL);
+        accountPage.clickLogout();
+    }
+
     @Test
     public void placeOrderTest() throws InterruptedException {
         accountPage.enterTextToSearch("Nikon D300");
@@ -71,6 +80,54 @@ public class CheckoutPageTest extends BaseTest {
         String actualMessage = checkoutSuccessPage.getSuccessMessage();
         Assert.assertEquals(actualMessage, expectedMessage);
 
+    }
 
+    @Test
+    public void placeOrderWithoutAgreeingTest() throws InterruptedException {
+        accountPage.enterTextToSearch("Nikon D300");
+        accountPage.clickSearchButton();
+        SearchResultsPage searchResultsPage = new SearchResultsPage(driver);
+        List<WebElement> results = searchResultsPage.getResults("Nikon D300");
+        results.get(0).click();
+        searchResultsPage.clickBuyNow();
+        Thread.sleep(3000);
+        CheckoutPage checkoutPage = new CheckoutPage(driver);
+        checkoutPage.insertFirstName("John");
+        checkoutPage.insertLastName("Doe");
+        checkoutPage.insertAddressOne("Street one");
+        checkoutPage.insertCity("Cluj-Napoca");
+        checkoutPage.insertPostcode("400");
+        checkoutPage.selectCountry("Romania");
+        Thread.sleep(1000);
+        checkoutPage.selectRegion("Cluj");
+        Thread.sleep(1000);
+
+        checkoutPage.clickContinueButton();
+        Thread.sleep(2000);
+
+        String expectedMessage = "Warning: You must agree to the Terms & Conditions!";
+        String actualMessage = checkoutPage.getAlertMessage();
+        Assert.assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    public void removeProductFromCartTest() throws InterruptedException {
+        accountPage.enterTextToSearch("Nikon D300");
+        accountPage.clickSearchButton();
+        SearchResultsPage searchResultsPage = new SearchResultsPage(driver);
+        List<WebElement> results = searchResultsPage.getResults("Nikon D300");
+        results.get(0).click();
+        searchResultsPage.clickBuyNow();
+        Thread.sleep(3000);
+        CheckoutPage checkoutPage = new CheckoutPage(driver);
+        List<WebElement> productRemoveButtons = checkoutPage.getProductRemoveButtons();
+
+        productRemoveButtons.get(0).click();
+        Thread.sleep(3000);
+
+        ShippingCartPage shippingCartPage = new ShippingCartPage(driver);
+        String expectedMessage = "Your shopping cart is empty!";
+        String actualMessage = shippingCartPage.getEmptyShippingCartMessage();
+        Assert.assertEquals(actualMessage, expectedMessage);
     }
 }
